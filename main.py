@@ -9,6 +9,7 @@ bot = commands.Bot(intents=intents)
 
 @bot.event
 async def on_ready():
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="febru - piję lean"), status=discord.Status.idle)
     print("[INFO] Connected to Discord.")
     bot.load_extension('cogs.Music')
     print("[INFO] Loaded Music Cog.")
