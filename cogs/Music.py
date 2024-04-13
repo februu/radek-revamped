@@ -2,10 +2,7 @@ import discord
 import wavelink
 from discord.ext import commands
 
-
-
 class Music(commands.Cog):
-
 
     def __init__(self, bot):
         self.bot = bot
@@ -66,7 +63,6 @@ class Music(commands.Cog):
 
         if not await self.check_if_user_eligible(ctx):
             return
-        
         if not vc:
             return await ctx.respond("I'm not even connected bozo 🤡", ephemeral=True)
 
@@ -85,7 +81,6 @@ class Music(commands.Cog):
 
         if not await self.check_if_user_eligible(ctx):
             return
-        
         if not vc:
             return await ctx.respond("I'm not even connected bozo 🤡", ephemeral=True)
 
@@ -104,7 +99,6 @@ class Music(commands.Cog):
 
         if not await self.check_if_user_eligible(ctx):
             return
-        
         if not vc:
             return await ctx.respond("I'm not even connected bozo 🤡", ephemeral=True)
 
@@ -121,7 +115,6 @@ class Music(commands.Cog):
 
         if not await self.check_if_user_eligible(ctx):
             return
-        
         if not vc:
             return await ctx.respond("I'm not even connected bozo 🤡", ephemeral=True)
 
@@ -138,7 +131,6 @@ class Music(commands.Cog):
 
         if not await self.check_if_user_eligible(ctx):
             return
-        
         if not vc:
             return await ctx.respond("I'm not even connected bozo 🤡", ephemeral=True)
 
@@ -148,6 +140,22 @@ class Music(commands.Cog):
         else:
             await ctx.respond("Looping enabled")
             self.repeat_settings[ctx.guild_id] = True
+
+
+
+    # Command to disconnect the bot
+    @discord.slash_command(name="disconnect", description="Disconnects the bot from voice channel.")
+    @discord.guild_only()
+    async def disconnect(self, ctx: discord.ApplicationContext):
+        vc = ctx.voice_client
+
+        if not await self.check_if_user_eligible(ctx):
+            return
+        if not vc:
+            return await ctx.respond("I'm not even connected bozo 🤡", ephemeral=True)
+
+        await vc.disconnect()
+        await ctx.respond("Disconnected.")
 
 
 
