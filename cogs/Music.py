@@ -33,11 +33,13 @@ class Music(commands.Cog):
         if not await self.check_if_user_eligible(ctx):
             return
 
+        await ctx.defer()
+
         # Search for song on YouTube
         song = await wavelink.Pool.fetch_tracks(f"ytsearch:{query}")
 
         if not song: 
-            return await ctx.respond("No song found. You stupid?", ephemeral=True)
+            return await ctx.respond("No song found. You stupid?)
         
         if not vc:
             vc = await ctx.author.voice.channel.connect(cls=wavelink.Player)
@@ -48,11 +50,11 @@ class Music(commands.Cog):
         if vc.queue.is_empty and not vc.playing:
             await vc.play(song[0])
             embed = create_embed(f"<a:now_playing:1228665822378065921> **NOW PLAYING** <a:now_playing:1228665822378065921>", f"*{song[0].title}*", song[0].artwork)
-            await ctx.respond("", embed=embed)
+            await ctx.followup.send("", embed=embed)
         else:
             vc.queue.put(song[0])
             embed = create_embed(f"<a:now_playing:1228665822378065921> **ADDED TO QUEUE** <a:now_playing:1228665822378065921>", f"*{song[0].title}*", song[0].artwork)
-            await ctx.respond("", embed=embed)
+            await ctx.followup.send("", embed=embed)
        
 
     # Command to pause the player
