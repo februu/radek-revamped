@@ -19,9 +19,15 @@ Multipurpose discord bot built with PyCord and WaveLink. _Still in development._
 If you want to run this bot for yourself, you need to create a config.py file in the main directory and paste the definitions below:
 
 ```
+'''
+config.py
+LAVALINK_URI should be set in the host:port format:
+e.g. https://example.com:443
+Remember to add http:// or  https:// before the host url depending on the lavalink server ssl status.
+'''
 DISCORD_TOKEN = ''
 GUILD_ID = ''
-LAVALINK_URI = '' # should be formatted like this -> host:port (example:1234)
+LAVALINK_URI = '' 
 LAVALINK_PASSWORD = ''
 ```
 
