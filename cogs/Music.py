@@ -2,7 +2,7 @@ import discord
 import wavelink
 from discord.ext import commands
 
-class Music(commands.Cog):
+class MusicCog(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
@@ -39,7 +39,7 @@ class Music(commands.Cog):
         song = await wavelink.Pool.fetch_tracks(f"ytsearch:{query}")
 
         if not song: 
-            return await ctx.respond("No song found. You stupid?)
+            return await ctx.followup.send("No song found. You stupid?")
         
         if not vc:
             vc = await ctx.author.voice.channel.connect(cls=wavelink.Player)
@@ -174,7 +174,8 @@ class Music(commands.Cog):
 
 
 def setup(bot): 
-    bot.add_cog(Music(bot)) 
+    bot.add_cog(MusicCog(bot)) 
+
 
 def create_embed(title, content, img=""):
     embed=discord.Embed(title=title, description=content, color=0x0799b8, image=img)

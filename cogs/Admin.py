@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-class Admin(commands.Cog):
+class AdminCog(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
@@ -15,4 +15,4 @@ class Admin(commands.Cog):
 
 
 def setup(bot): 
-    bot.add_cog(Admin(bot)) 
+    bot.add_cog(AdminCog(bot)) 
