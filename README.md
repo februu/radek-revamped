@@ -1,10 +1,12 @@
-![radek logo](https://cdn.discordapp.com/avatars/768542083228368907/63758443b0b61297da199dc1741bcc8a)
+<p align="center">
+  <img width="512" height="512" src="https://raw.githubusercontent.com/februu/februu.github.io/refs/heads/main/media/radek-logo.png">
+</p>
 
 # Radek Revamped
 
 Multipurpose discord bot built with PyCord and WaveLink. _Still in development._
 
-### Available commands
+## Available commands
 
 **Music Cog**
 
@@ -24,9 +26,15 @@ Multipurpose discord bot built with PyCord and WaveLink. _Still in development._
 
 - `gpt <query>` - Sends <query> to gpt 4o-mini.
 
-### Setup
+## Installation
 
-If you want to run this bot for yourself, you need to create a config.py file in the main directory and paste the definitions below:
+```shell
+git clone https://github.com/februu/radek-revamped
+cd radek-revamped
+pip install -r requirements.txt
+```
+
+If you want to run this bot for yourself, you need to create a `config.py` file in the main directory and paste the definitions below:
 
 ```python
 '''
@@ -41,7 +49,7 @@ config.py
 ##### Main Section #####
 DISCORD_TOKEN = ''
 GUILD_ID = ''
-ENABLED_COGS = ["Music", "Admin", "AI", "Youtube"]
+ENABLED_COGS = ["Music", "Admin", "AI", "YouTube"]
 
 ##### Music Section #####
 LAVALINK_URI = ''
@@ -58,8 +66,11 @@ OPEN_AI_API_KEY = ""
 
 You can obtain Discord Bot Token from [Discord Developer Portal](https://discord.com/developers/applications) and get some free LavaLink servers from [here](https://lavalink.darrennathanael.com/SSL/lavalink-with-ssl/). Then install the libraries from requirements.txt. I suggest using Oracle Cloud Instance to host your bot for free 😊
 
-⚠️ In case of errors use the command below to download newest version of py-cord:
+⚠️ In case of errors use the command below to download newest version of PyCord and get rid of conflicts with discord.py: ⚠️
 
 ```shell
+pip uninstall discord.py
+pip uninstall py-cord
 pip install git+https://github.com/pycord-development/pycord
+pip install py-cord
 ```
