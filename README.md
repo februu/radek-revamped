@@ -6,6 +6,8 @@ Multipurpose discord bot built with PyCord and WaveLink. _Still in development._
 
 ### Available commands
 
+**Music Cog**
+
 - `play <query>` - Searches <query> on youtube and adds it to queue.
 - `pause` - Pauses/resumes the bot.
 - `loop` - Enables one-track repeat mode.
@@ -13,6 +15,14 @@ Multipurpose discord bot built with PyCord and WaveLink. _Still in development._
 - `queue` - Displays the queue.
 - `clearqueue` - Empties the queue.
 - `disconnect` - Disconnects the bot from voice channel.
+
+**Admin Cog**
+
+- `shutdown` - Shuts down the bot. (You can use it with bash script to restart the bot whenever you want).
+
+**AI Cog**
+
+- `gpt <query>` - Sends <query> to gpt 4o-mini.
 
 ### Setup
 
@@ -31,6 +41,7 @@ config.py
 ##### Main Section #####
 DISCORD_TOKEN = ''
 GUILD_ID = ''
+ENABLED_COGS = ["Music", "Admin", "AI", "Youtube"]
 
 ##### Music Section #####
 LAVALINK_URI = ''
@@ -40,6 +51,9 @@ LAVALINK_PASSWORD = ''
 YT_CHANNELS = [""]
 DISCORD_FEED_CHANNEL_ID = ""
 DISCORD_FEED_MESSAGE = "@everyone Nowe gorące gówno na kanale:"
+
+##### AI Cog Section #####
+OPEN_AI_API_KEY = ""
 ```
 
 You can obtain Discord Bot Token from [Discord Developer Portal](https://discord.com/developers/applications) and get some free LavaLink servers from [here](https://lavalink.darrennathanael.com/SSL/lavalink-with-ssl/). Then install the libraries from requirements.txt. I suggest using Oracle Cloud Instance to host your bot for free 😊

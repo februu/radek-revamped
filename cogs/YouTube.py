@@ -33,6 +33,7 @@ class YouTubeCog(commands.Cog):
                     self.latest_video[channel_id] = link
                     if self.channel == None:
                         self.channel = await self.bot.fetch_channel(DISCORD_FEED_CHANNEL_ID)
+                        continue
                     await self.channel.send(f"{DISCORD_FEED_MESSAGE} {link}")
 
         except httpx.HTTPStatusError as e:
