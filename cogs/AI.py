@@ -28,21 +28,8 @@ class AICog(commands.Cog):
         response_content = response.choices[0].message.content
         if len(response_content) > 2000:
             response_content = response_content[:2000]  # Truncates the message if needed
+        print(f"\033[32m[INFO - AI]\033[0m Invoked /gpt. Responding with:\n\n {response_content}\n\n")
         await ctx.respond(response_content)
-        
-    # async def get_response(self, url):
-    #     try:
-    #         async with httpx.AsyncClient() as client:
-    #             response = await client.get(url)
-    #             response.raise_for_status()
-    #             return response.text
-    #     except httpx.HTTPStatusError as e:
-    #         print(f"HTTP error occurred: {e.response.status_code}")
-    #         return ""
-    #     except httpx.RequestError as e:
-    #         print(f"An error occurred while requesting: {str(e)}")
-    #         return ""
-
 
 def setup(bot): 
     bot.add_cog(AICog(bot)) 

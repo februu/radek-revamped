@@ -10,6 +10,7 @@ class AdminCog(commands.Cog):
     @discord.slash_command(name="shutdown", description="Shutdowns the bot")
     @discord.guild_only()
     async def restart(self, ctx: discord.ApplicationContext):
+        print(f"\033[32m[INFO - ADMIN]\033[0m Invoked /shutdown. Shutting down...")
         await ctx.respond("Shutting down..")
         await self.bot.close()
 

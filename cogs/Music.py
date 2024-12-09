@@ -14,12 +14,15 @@ class MusicCog(commands.Cog):
         player = payload.player
         if player:
             if self.repeat_settings[player.guild.id]:
+                print(f"\033[32m[INFO - MUSIC]\033[0m Playing {payload.track.title} \033[34m[looping]\033[0m.")
                 await player.play(payload.track)
             else:
                 if not player.queue.is_empty:
                     next_song = await player.queue.get_wait()
+                    print(f"\033[32m[INFO - MUSIC]\033[0m Playing {next_song.title}.")
                     await player.play(next_song)
                 else:
+                    print(f"\033[32m[INFO - MUSIC]\033[0m Queue is empty. Disconnecting.")
                     await player.disconnect()
 
 
@@ -34,6 +37,7 @@ class MusicCog(commands.Cog):
             return
 
         await ctx.defer()
+        print(f"\033[32m[INFO - MUSIC]\033[0m Invoked /play with query: {query}.")
 
         # Search for song on YouTube
         song = await wavelink.Pool.fetch_tracks(f"ytsearch:{query}")
@@ -42,17 +46,31 @@ class MusicCog(commands.Cog):
             return await ctx.followup.send("No song found. You stupid?")
         
         if not vc:
-            vc = await ctx.author.voice.channel.connect(cls=wavelink.Player)
-            # Reset track looping settings
-            self.repeat_settings[ctx.guild_id] = False
+            max_retries = 3
+            retries = 0
+            while retries < max_retries:
+                try:
+                    vc = await ctx.author.voice.channel.connect(cls=wavelink.Player, reconnect=True)
+                    print(f"\033[32m[INFO - MUSIC]\033[0m Connected to {ctx.author.voice.channel.name}.")
+                    # Reset track looping settings
+                    self.repeat_settings[ctx.guild_id] = False
+                    break
+                except wavelink.exceptions.ChannelTimeoutException:
+                    vc = None
+                    retries += 1
+            if not vc:
+                print(f"\033[31m[ERROR - MUSIC]\033[0m Failed to connect to {ctx.author.voice.channel.name}.")
+                return await ctx.followup.send("Error has occured. Try using /shutdown command to restart the bot.")
 
         # Play or add to queue
         if vc.queue.is_empty and not vc.playing:
             await vc.play(song[0])
+            print(f"\033[32m[INFO - MUSIC]\033[0m Playing {song[0].title}.")
             embed = create_embed(f"<a:now_playing:1228665822378065921> **NOW PLAYING** <a:now_playing:1228665822378065921>", f"*{song[0].title}*", song[0].artwork)
             await ctx.followup.send("", embed=embed)
         else:
             vc.queue.put(song[0])
+            print(f"\033[32m[INFO - MUSIC]\033[0m Added {song[0].title} to queue.")
             embed = create_embed(f"<a:now_playing:1228665822378065921> **ADDED TO QUEUE** <a:now_playing:1228665822378065921>", f"*{song[0].title}*", song[0].artwork)
             await ctx.followup.send("", embed=embed)
        
@@ -70,8 +88,10 @@ class MusicCog(commands.Cog):
 
         await vc.pause(not vc.paused)
         if vc.paused:
+            print(f"\033[32m[INFO - MUSIC]\033[0m Paused.")
             await ctx.respond("Paused")
         else:
+            print(f"\033[32m[INFO - MUSIC]\033[0m Resumed.")
             await ctx.respond("Resumed")
 
 
@@ -106,6 +126,7 @@ class MusicCog(commands.Cog):
 
         if not vc.queue.is_empty:
             vc.queue.clear()
+            print(f"\033[32m[INFO - MUSIC]\033[0m Queue cleared.")
         await ctx.respond("Queue cleared.")
 
 
@@ -122,10 +143,11 @@ class MusicCog(commands.Cog):
 
         await vc.seek(vc.current.length) 
         self.repeat_settings[ctx.guild_id] = False
+        print(f"\033[32m[INFO - MUSIC]\033[0m Skipping current track.")
         await ctx.respond("Skipping...")
 
 
-    # Command to clear the queue
+    # Command to loop currently playing song
     @discord.slash_command(name="loop", description="Loops currently played track")
     @discord.guild_only()
     async def loop(self, ctx: discord.ApplicationContext):
@@ -138,9 +160,11 @@ class MusicCog(commands.Cog):
 
         if self.repeat_settings[ctx.guild_id]:
             await ctx.respond("Looping disabled")
+            print(f"\033[32m[INFO - MUSIC]\033[0m Looping disabled.")
             self.repeat_settings[ctx.guild_id] = False
         else:
             await ctx.respond("Looping enabled")
+            print(f"\033[32m[INFO - MUSIC]\033[0m Looping enabled.")
             self.repeat_settings[ctx.guild_id] = True
 
 
@@ -157,6 +181,7 @@ class MusicCog(commands.Cog):
             return await ctx.respond("I'm not even connected bozo 🤡", ephemeral=True)
 
         await vc.disconnect()
+        print(f"\033[32m[INFO - MUSIC]\033[0m Disconnected.")
         await ctx.respond("Disconnected.")
 
 

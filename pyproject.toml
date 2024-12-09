@@ -1,0 +1,12 @@
+[project]
+name = "radek-revamped"
+version = "0.2.0"
+description = "The second version of my original Discord Bot. Written using PyCord. 🦇"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.28.1",
+    "openai>=1.57.1",
+    "py-cord @ git+https://github.com/pycord-development/pycord",
+    "wavelink @ git+https://github.com/februuu/Wavelink",
+]

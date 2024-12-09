@@ -1,4 +1,0 @@
-py-cord
-openai
-httpx
-wavelink
