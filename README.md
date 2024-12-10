@@ -30,8 +30,6 @@ Multipurpose Discord Bot built with PyCord, OpenAI and WaveLink. _Still in devel
 
 ```shell
 git clone https://github.com/februu/radek-revamped
-cd radek-revamped
-pip install -r requirements.txt
 ```
 
 If you want to run this bot for yourself, you need to create a `config.py` file in the main directory and paste the definitions below:
